@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFBinding"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="515">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -20,22 +22,29 @@
             <RowDefinition Height="125*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
-            <TextBox x:Name="idBox" Text="Id" FontSize="20" Margin="10"/>
-            <TextBox x:Name="nameBox" Text="Nazwa" FontSize="20" Margin="10"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10">
+            <TextBox x:Name="idBox" Text="Id" FontSize="20" Margin="10" />
+            <TextBox x:Name="nameBox" Text="Nazwa" FontSize="20" Margin="10" />
             <TextBox x:Name="ageBox" Text="Wiek" FontSize="20" Margin="10"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
+        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1" Margin="10">
+            <TextBlock FontSize="20" Margin="10" Text="->" TextAlignment="Center"/>
+            <TextBlock FontSize="20" Margin="10" Text="->" TextAlignment="Center"/>
+            <TextBlock FontSize="20" Margin="10" Text="->" TextAlignment="Center"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Margin="10">
             <TextBlock Text="{Binding ElementName=idBox, Path=Text}" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
             <TextBlock Text="{Binding ElementName=nameBox, Path=Text}" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
             <TextBlock Text="{Binding ElementName=ageBox, Path=Text}" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="10">
-            <Button Click="Remove_Data">Usun dane</Button>
+        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="2" Margin="10">
             <DataGrid Name="DaneDatabase" AutoGenerateColumns="True"/>
         </StackPanel>
-        <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Margin="10">Zapisz dane</Button>
+
+        <Button Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Click="Remove_Data" Margin="10">Usun dane</Button>
+        <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Click="Button_Click" Margin="10">Dodaj i zapisz dane</Button>
     </Grid>
 </Window>
