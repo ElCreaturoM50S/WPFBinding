@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Data.SQLite;
 using System.Data.SqlClient;
+using System.Data;
+using System.Diagnostics;
 
 namespace WPFBinding
 {
@@ -23,14 +25,50 @@ namespace WPFBinding
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string ConnectionString = "Data Source=MojaBaza.db;Version=3;";
+        private const string ConnectionString = "Data Source=MojaBazaXD.db;Version=3;";
         public MainWindow()
         {
             InitializeComponent();
+            LoadDataFromDataBase();
         }
 
+        public void LoadDataFromDataBase()
+        {
+            SQLiteConnection connection = new SQLiteConnection(ConnectionString);
+            connection.Open();
+
+
+            string query = "SELECT * FROM UserNames";
+            //SELECT DISTINCT Name FROM playlist_track 
+            //INNER JOIN tracks ON tracks.TrackId = playlist_track.TrackId
+            //LIMIT 25
+
+            using (var command = new SQLiteCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+
+                    DataTable dataTable = new DataTable();
+                    dataTable.Load(reader);
+                    DaneDatabase.ItemsSource = dataTable.DefaultView;
+                }
+            }
+        }
+        private void Remove_Data(object sender, RoutedEventArgs e)
+        {
+            SQLiteConnection connection = new SQLiteConnection(ConnectionString);
+            connection.Open();
+            string query = "DELETE FROM UserNames";
+
+            using (var command = new SQLiteCommand(query, connection))
+            {
+                command.ExecuteReader();
+                LoadDataFromDataBase();
+            }
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            LoadDataFromDataBase();
             string idToSave = idBox.Text;
             string nameToSave = nameBox.Text;
             string ageToSave = ageBox.Text;
@@ -54,7 +92,7 @@ namespace WPFBinding
                         command.ExecuteNonQuery();
                     }
                 }
-                MessageBox.Show($"Dane został zapisane ({idToSave} {ageToSave} {nameToSave}) została zapisana");
+                // MessageBox.Show($"Dane został zapisane ({idToSave} {ageToSave} {nameToSave}) została zapisana");
             } else
             {
                 MessageBox.Show("SDADSADSAD NIE DIZLAA");
@@ -64,12 +102,13 @@ namespace WPFBinding
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 string filePath = System.IO.Path.Combine(desktopPath, "mojedane.txt");
                 File.WriteAllText(filePath, $"{idToSave} {nameToSave} {ageToSave}");
-                MessageBox.Show("Wszystko zapisane");
+                // MessageBox.Show("Wszystko zapisane");
             }   
             catch (Exception ex)
             {
                 MessageBox.Show("Błąd podczas zapisywanie " + ex.Message);
             }
+            LoadDataFromDataBase();
         }
     }
 }

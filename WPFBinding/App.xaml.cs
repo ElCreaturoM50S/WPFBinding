@@ -15,7 +15,7 @@ namespace WPFBinding
     /// </summary>
     public partial class App : Application
     {
-        private const string ConnectionString = "Data Source=MojaBaza.db;Version=3;";
+        private const string ConnectionString = "Data Source=MojaBazaXD.db;Version=3;";
         public App()
         {
             CreateTable();
@@ -27,7 +27,7 @@ namespace WPFBinding
             {
                 connection.Open();
 
-                string query = "CREATE TABLE IF NOT EXISTS UserNames (name TEXT)";
+                string query = "CREATE TABLE IF NOT EXISTS UserNames (id TEXT,name TEXT, age TEXT)";
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
                     command.ExecuteNonQuery();
