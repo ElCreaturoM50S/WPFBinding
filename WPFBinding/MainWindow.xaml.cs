@@ -29,7 +29,7 @@ namespace WPFBinding
         public MainWindow()
         {
             InitializeComponent();
-            LoadDataFromDataBase();
+            MessageBox.Show("Niesamowita aplikacja wpf z bindingsami (ula...)");
         }
 
         public void LoadDataFromDataBase()
@@ -47,7 +47,6 @@ namespace WPFBinding
             {
                 using (var reader = command.ExecuteReader())
                 {
-
                     DataTable dataTable = new DataTable();
                     dataTable.Load(reader);
                     DaneDatabase.ItemsSource = dataTable.DefaultView;
@@ -66,9 +65,22 @@ namespace WPFBinding
                 LoadDataFromDataBase();
             }
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Show_data(object sender, RoutedEventArgs e)
         {
             LoadDataFromDataBase();
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Dodaj_Click(sender,e);
+            LoadDataFromDataBase();
+        }
+        private void Zapisz_Dane(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Wszystko zapisane hehe");
+        }
+        private void Dodaj_Click(object sender, RoutedEventArgs e)
+        {
+            
             string idToSave = idBox.Text;
             string nameToSave = nameBox.Text;
             string ageToSave = ageBox.Text;
@@ -108,7 +120,7 @@ namespace WPFBinding
             {
                 MessageBox.Show("Błąd podczas zapisywanie " + ex.Message);
             }
-            LoadDataFromDataBase();
+            
         }
     }
 }
